@@ -36,8 +36,6 @@ need to load. You'll see a lot of <link>s to CSS files for styles and
 </head>
 <body>
   <div id="main">
-    Hello world!   <!-- You'll be deleting this line in the course -->
-
     <!--
     Everything from here to the <script> tag below is the skeleton of your
     website. Your code will add information to each of the sections of the
@@ -108,19 +106,65 @@ need to load. You'll see a lot of <link>s to CSS files for styles and
   -->
 
   <script>
-    // Notice how all of a sudden there's JavaScript inside this HTML
-    // document? You can write JavaScript between <script> tags. At the end of your
-    // JavaScript, don't forget the closing script tag with the slash (/).
+
+    var name = "fernando yasumoto";
+    var formattedName = HTMLheaderName.replace("%data%",name);
+    
+    var role = "Web Developer";
+    var formattedRole = HTMLheaderRole.replace("%data%",role);
+
+    $("#header").prepend(formattedRole);
+    $("#header").prepend(formattedName);
+
+    if(bio.skills.length>0){
+
+      $("#header").append(HTMLskillsStart);
+
+      var formattedSkill = HTMLskills.replace("%data%",bio.skills[0]);
+      formattedSkill = HTMLskills.replace("%data%",bio.skills[1]);
+      formattedSkill = HTMLskills.replace("%data%",bio.skills[2]);
+      formattedSkill = HTMLskills.replace("%data%",bio.skills[3]);
+            $("#skills").append(formattedSkill);
+
+    }
+
+function displayWork(){
+
+   for (job in work.jobs){
+      $("#workExperience").append(HTMLworkStart);
+
+      var formattedEmployer = HTMLworkEmployer.replace("%data%",work.jobs[job].employer);
+      var formattedTitle = HTMLworkTitle.replace("%data%",work.jobs[job].title);
+      var formattedEmployerTitle = formattedEmployer + formattedTitle;
+      var formattedDate = HTMLworkDates.replace("%data%",work.jobs[job].dates);
+      var formattedLocal = HTMLworkLocation.replace("%data%",work.jobs[job].location);
+      var formattedDescription = HTMLworkDescription.replace("%data%",work.jobs[job].description);
+      $(".work-entry:last").append(formattedEmployerTitle);
+      $(".work-entry:last").append(formattedDate);
+      $(".work-entry:last").append(formattedDescription);
+    }
+}
+
+displayWork();
+  
+  function inName(name){
+    var newname = name.split(" ");
+    newname[0] = newname[0].slice(0,1).toUpperCase() + newname[0].slice(1).toLowerCase();
+    newname[1] = newname[1].toUpperCase();
+
+    return newname[0]+" "+ newname[1];
+    }
+
+  $("#main").append(internationalizeButton);
+
+  $(document).click(function(loc){
+    var x = loc.pageX;
+    var y = loc.pageY;
+    logClicks(x,y);
+  });
 
 
-    // Also, this is a JavaScript style comment. You can comment in JavaScript with:
-
-    //   two slashes for all following characters on a single line, or
-
-    /*
-        an opening and closing set of slash asterisks for block comments.
-    */
-
+   
 
     if(document.getElementsByClassName('flex-item').length === 0) {
       document.getElementById('topContacts').style.display = 'none';
